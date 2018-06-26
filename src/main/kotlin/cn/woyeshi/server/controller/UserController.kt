@@ -5,10 +5,7 @@ import cn.woyeshi.server.domain.User
 import cn.woyeshi.server.domain.UserExample
 import cn.woyeshi.server.exceptions.*
 import cn.woyeshi.server.mapper.UserMapper
-import cn.woyeshi.server.utils.CharacterUtils
-import cn.woyeshi.server.utils.Constants
-import cn.woyeshi.server.utils.ResultUtil
-import cn.woyeshi.server.utils.TextUtils
+import cn.woyeshi.server.utils.*
 import com.github.pagehelper.PageHelper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.RequestMapping
@@ -19,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 
 @RequestMapping("user")
 @RestController
-class UserController {
+class UserController : BaseController() {
 
     @Autowired
     val userMapper: UserMapper? = null
@@ -43,7 +40,15 @@ class UserController {
         if (TextUtils.isNotEmpty(password)) {
             criteria.andPasswordEqualTo(password!!)
         }
-        return ResultUtil.success(userMapper?.selectByExample(userExample))
+        val list = userMapper?.selectByExample(userExample)
+        if (list != null && list.isNotEmpty() && TextUtils.isNotEmpty(password)) {
+            val user: User = list[0]
+            val token = CharacterUtils.getRandomString(32)
+            redisUtils?.set("token_${user.userId}", token, 86400000L)          //登录信息有效期为24小时
+            user.token = token
+            Logger.i(TAG, "user token generated:" + redisUtils?.get("token_${user.userId}"))
+        }
+        return ResultUtil.success(list)
     }
 
     /**

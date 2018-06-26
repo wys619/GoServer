@@ -4,6 +4,7 @@ class User {
     var userId: String? = null
     var userName: String? = null
     var password: String? = null
+    var token: String? = null
 
     constructor(userId: String, userName: String, password: String) {
         this.userId = userId
@@ -11,5 +12,5 @@ class User {
         this.password = password
     }
 
-    constructor() : super() {}
+    constructor() : super()
 }
