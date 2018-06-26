@@ -1,0 +1,85 @@
+buildscript {
+    ext {
+        kotlinVersion = '1.2.31'
+        springBootVersion = '1.5.8.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'java'
+apply plugin: 'kotlin-spring'
+
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+//apply plugin: 'war'
+
+group = 'cn.woyeshi'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    providedRuntime
+}
+
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter-web')
+
+    compile("org.springframework.boot:spring-boot-starter-data-redis")
+    compile('org.springframework.boot:spring-boot-starter')
+    compile("org.springframework.data:spring-data-redis")
+
+    runtime('mysql:mysql-connector-java')
+    providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
+
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jre8:${kotlinVersion}")
+    compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
+    compile("org.mybatis.spring.boot:mybatis-spring-boot-starter:1.3.1")
+
+    compile group: 'com.github.pagehelper', name: 'pagehelper', version: '4.1.0'
+
+    testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+//mybatis generator plugin ------ start
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.arenagod.gradle:mybatis-generator-plugin:1.4"
+    }
+}
+
+apply plugin: "com.arenagod.gradle.MybatisGenerator"
+
+configurations {
+    mybatisGenerator
+}
+
+mybatisGenerator {
+    verbose = true
+    configFile = 'src/main/resources/tools/generatorConfig.xml'
+}
+//mybatis generator plugin ------ end
