@@ -7,16 +7,25 @@ package cn.woyeshi.server.domain;
  */
 public class Result<T> {
 
-    /** 错误码. */
+    /**
+     * 错误码.
+     */
     private Integer code;
 
-    /** 提示信息. */
+    /**
+     * 提示信息.
+     */
     private String msg;
 
-    /** 具体的内容. */
+    /**
+     * 具体的内容.
+     */
     private T data;
 
     public Integer getCode() {
+        if (code == null) {
+            return 0;
+        }
         return code;
     }
 

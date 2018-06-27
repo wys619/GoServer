@@ -26,7 +26,7 @@ class UserController : BaseController() {
      */
     @RequestMapping(method = [RequestMethod.GET])
     @ResponseBody
-    fun queryUser(pageNum: Int?, pageSize: Int?, userName: String?, password: String?): Result<List<User>>? {
+    fun queryUser(pageNum: Int?, pageSize: Int?, userName: String?, password: String?): Result<Any>? {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage<User>(pageNum, pageSize)
         } else {
@@ -55,7 +55,7 @@ class UserController : BaseController() {
      * POST方法执行添加用户记录
      */
     @RequestMapping(method = [RequestMethod.POST])
-    fun register(userName: String?, password: String?): Result<User> {
+    fun register(userName: String?, password: String?): Result<Any> {
         if (TextUtils.isEmpty(userName)) {
             throw UserNameEmptyException()
         }
@@ -106,7 +106,7 @@ class UserController : BaseController() {
             throw UserNotExistException()
         }
         if (TextUtils.isEmpty(user.password) || TextUtils.isEmpty(user.userName)) {
-            return ResultUtil.error(-1, "用户名或密码不能为空")
+            return ResultUtil.error(-1, "用户名或密码不能为空", null)
         }
         val record = userMapper?.selectByPrimaryKey(user.userId!!)
         if (record != null) {

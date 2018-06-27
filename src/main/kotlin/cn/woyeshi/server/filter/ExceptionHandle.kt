@@ -17,11 +17,11 @@ class ExceptionHandle {
     @ResponseBody
     fun handle(e: Exception): Result<*> {
         return if (e is BaseException) {
-            ResultUtil.error(e.code, e.message)
+            ResultUtil.error(e.code, e.message, null)
         } else {
             //将系统异常以打印出来
-            logger.info("[系统异常]{}", e)
-            ResultUtil.error(-1, "未知错误")
+            logger.info("[系统异常]", e)
+            ResultUtil.error(-1, "未知错误", null)
         }
     }
 
