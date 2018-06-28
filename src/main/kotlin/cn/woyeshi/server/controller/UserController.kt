@@ -46,7 +46,7 @@ class UserController : BaseController() {
             val token = CharacterUtils.getRandomString(32)
             redisUtils?.set("token_${user.userId}", token, 86400000L)          //登录信息有效期为24小时
             user.token = token
-            Logger.i(TAG, "user token generated:" + redisUtils?.get("token_${user.userId}"))
+            Logger.i(UserController::class.java, "user token generated:" + redisUtils?.get("token_${user.userId}"))
         }
         return ResultUtil.success(list)
     }

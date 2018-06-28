@@ -9,7 +9,7 @@ public class MD5 {
     }
 
     public static String getMD5(byte[] buffer) {
-        Logger.INSTANCE.i(TAG, "md5 start time" + System.currentTimeMillis());
+        Logger.INSTANCE.i(MD5.class, "md5 start time" + System.currentTimeMillis());
         char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
         try {
             MessageDigest mdTemp = MessageDigest.getInstance("MD5");
@@ -22,7 +22,7 @@ public class MD5 {
                 str[k++] = hexDigits[byte0 >>> 4 & 0xf];
                 str[k++] = hexDigits[byte0 & 0xf];
             }
-            Logger.INSTANCE.i(TAG, "md5 end time" + System.currentTimeMillis());
+            Logger.INSTANCE.i(MD5.class, "md5 end time" + System.currentTimeMillis());
             return new String(str);
         } catch (Exception e) {
             return null;

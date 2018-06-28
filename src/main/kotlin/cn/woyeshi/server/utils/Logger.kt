@@ -1,27 +1,24 @@
 package cn.woyeshi.server.utils
 
-import cn.woyeshi.server.filter.ExceptionHandle
 import org.slf4j.LoggerFactory
 
 object Logger {
 
-    private val logger = LoggerFactory.getLogger(ExceptionHandle::class.java)
-
-    fun i(tag: String, msg: String?) {
-        logger.info("$tag --------------> $msg")
+    fun <T> i(tag: Class<T>, msg: String?) {
+        LoggerFactory.getLogger(tag).info("$tag --------------> $msg")
     }
 
-    fun d(tag: String, msg: String?) {
-        logger.debug("$tag --------------> $msg")
+    fun <T> d(tag: Class<T>, msg: String?) {
+        LoggerFactory.getLogger(tag).debug("$tag --------------> $msg")
     }
 
 
-    fun w(tag: String, msg: String?) {
-        logger.warn("$tag --------------> $msg")
+    fun <T> w(tag: Class<T>, msg: String?) {
+        LoggerFactory.getLogger(tag).warn("$tag --------------> $msg")
     }
 
-    fun e(tag: String, msg: String?) {
-        logger.error("$tag --------------> $msg")
+    fun <T> e(tag: Class<T>, msg: String?) {
+        LoggerFactory.getLogger(tag).error("$tag --------------> $msg")
     }
 
 
