@@ -21,6 +21,9 @@ class UserController : BaseController() {
     @Autowired
     val userMapper: UserMapper? = null
 
+    @Autowired
+    val redisUtils: RedisUtils? = null
+
     /**
      * GET方式执行查询
      */
@@ -44,7 +47,7 @@ class UserController : BaseController() {
         if (list != null && list.isNotEmpty() && TextUtils.isNotEmpty(password)) {
             val user: User = list[0]
             val token = CharacterUtils.getRandomString(32)
-            redisUtils?.set("token_${user.userId}", token, 86400000L)          //登录信息有效期为24小时
+            redisUtils?.set(token, "token_${user.userId}", 86400000L)          //登录信息有效期为24小时
             user.token = token
             Logger.i(UserController::class.java, "user token generated:" + redisUtils?.get("token_${user.userId}"))
         }
@@ -55,12 +58,15 @@ class UserController : BaseController() {
      * POST方法执行添加用户记录
      */
     @RequestMapping(method = [RequestMethod.POST])
-    fun register(userName: String?, password: String?): Result<Any> {
+    fun register(userName: String?, password: String?, code: String): Result<Any> {
         if (TextUtils.isEmpty(userName)) {
             throw UserNameEmptyException()
         }
         if (TextUtils.isEmpty(password)) {
             throw PasswordEmptyException()
+        }
+        if (TextUtils.isEmpty(code)) {
+            throw BaseException(-1, "验证码不能为空")
         }
         val userExample = UserExample()
         val criteria = userExample.createCriteria()
