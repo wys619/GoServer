@@ -54,7 +54,7 @@ class VerifyCodeController : BaseController() {
                 return ResultUtil.error(-1, "获取的验证码的类型错误", null)
             }
         }
-
+        return ResultUtil.success()
 
     }
 

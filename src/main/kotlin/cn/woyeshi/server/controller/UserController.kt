@@ -45,13 +45,35 @@ class UserController : BaseController() {
         }
         val list = userMapper?.selectByExample(userExample)
         if (list != null && list.isNotEmpty() && TextUtils.isNotEmpty(password)) {
-            val user: User = list[0]
-            val token = CharacterUtils.getRandomString(32)
-            redisUtils?.set(token, "token_${user.userId}", 86400000L)          //登录信息有效期为24小时
-            user.token = token
-            Logger.i(UserController::class.java, "user token generated:" + redisUtils?.get("token_${user.userId}"))
+            onLoginSuccess(list)
+        } else if (TextUtils.isNotEmpty(password)) {                //登录的时候用户名或者密码不正确
+            return onLoginFail(userName)
         }
         return ResultUtil.success(list)
+    }
+
+    //登录失败
+    private fun onLoginFail(userName: String?): Result<Any>? {
+        val userNameExample = UserExample()
+        val userNameCriteria = userNameExample.createCriteria()
+        if (TextUtils.isNotEmpty(userName)) {
+            userNameCriteria.andUserNameEqualTo(userName!!)
+        }
+        val users = userMapper?.selectByExample(userNameExample)
+        return if (users == null || users.isEmpty()) {
+            ResultUtil.error(-1, "账号不存在", null)
+        } else {
+            ResultUtil.error(-1, "您输入的密码不正确", null)
+        }
+    }
+
+    //
+    private fun onLoginSuccess(list: List<User>) {
+        val user: User = list[0]
+        val token = CharacterUtils.getRandomString(32)
+        redisUtils?.set("token_${user.userId}", token, 86400000L)          //登录信息有效期为24小时
+        user.token = token
+        Logger.i(UserController::class.java, "user token generated:" + redisUtils?.get("token_${user.userId}"))
     }
 
     /**
