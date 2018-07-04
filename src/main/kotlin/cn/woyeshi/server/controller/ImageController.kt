@@ -4,7 +4,7 @@ import cn.woyeshi.server.domain.Result
 import cn.woyeshi.server.exceptions.BaseException
 import cn.woyeshi.server.utils.Logger
 import cn.woyeshi.server.utils.MD5
-import cn.woyeshi.server.utils.ResultUtil
+import cn.woyeshi.server.utils.Results
 import cn.woyeshi.server.utils.TextUtils
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
@@ -23,7 +23,7 @@ class ImageController : BaseController() {
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
     @ResponseBody
-    fun uploadImage(@RequestParam("file") file: MultipartFile, @RequestHeader("token") token: String): Result<Any> {
+    fun uploadImage(@RequestParam("file") file: MultipartFile, @RequestHeader("token") token: String): Result {
         if (file.isEmpty) {
             throw BaseException(-1, "文件内容为空，请先选择一个文件！")
         }
@@ -42,21 +42,21 @@ class ImageController : BaseController() {
         when (contentType) {
             "image/png" -> {
                 val cacheName = "$md5.png"
-                if (saveFile(cacheName, file)) return ResultUtil.success("找到相同文件并已经复用")
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用")
             }
             "image/jpg" -> {
                 val cacheName = "$md5.jpg"
-                if (saveFile(cacheName, file)) return ResultUtil.success("找到相同文件并已经复用")
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用")
             }
             "image/jpeg" -> {
                 val cacheName = "$md5.jpeg"
-                if (saveFile(cacheName, file)) return ResultUtil.success("找到相同文件并已经复用")
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用")
             }
             else -> {
                 throw BaseException(-1, "目前只支持jpg/jpeg或者png格式的图片")
             }
         }
-        return ResultUtil.success()
+        return Results.success()
     }
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {

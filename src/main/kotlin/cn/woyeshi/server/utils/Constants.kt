@@ -14,6 +14,7 @@ object Constants {
 
     object RedisKeys {
         const val KEY_LAST_VERIFY_CODE_TIME = "KEY_LAST_VERIFY_CODE_TIME"
+        const val KEY_LAST_VERIFY_CODE = "KEY_LAST_VERIFY_CODE"
     }
 
 

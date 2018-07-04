@@ -29,7 +29,7 @@ class UserController : BaseController() {
      */
     @RequestMapping(method = [RequestMethod.GET])
     @ResponseBody
-    fun queryUser(pageNum: Int?, pageSize: Int?, userName: String?, password: String?): Result<Any>? {
+    fun queryUser(pageNum: Int?, pageSize: Int?, userName: String?, password: String?): Result? {
         if (pageNum != null && pageSize != null) {
             PageHelper.startPage<User>(pageNum, pageSize)
         } else {
@@ -49,11 +49,11 @@ class UserController : BaseController() {
         } else if (TextUtils.isNotEmpty(password)) {                //登录的时候用户名或者密码不正确
             return onLoginFail(userName)
         }
-        return ResultUtil.success(list)
+        return Results.success(list)
     }
 
     //登录失败
-    private fun onLoginFail(userName: String?): Result<Any>? {
+    private fun onLoginFail(userName: String?): Result? {
         val userNameExample = UserExample()
         val userNameCriteria = userNameExample.createCriteria()
         if (TextUtils.isNotEmpty(userName)) {
@@ -61,9 +61,9 @@ class UserController : BaseController() {
         }
         val users = userMapper?.selectByExample(userNameExample)
         return if (users == null || users.isEmpty()) {
-            ResultUtil.error(-1, "账号不存在", null)
+            Results.error(-1, "账号不存在", null)
         } else {
-            ResultUtil.error(-1, "您输入的密码不正确", null)
+            Results.error(-1, "您输入的密码不正确", null)
         }
     }
 
@@ -80,7 +80,7 @@ class UserController : BaseController() {
      * POST方法执行添加用户记录
      */
     @RequestMapping(method = [RequestMethod.POST])
-    fun register(userName: String?, password: String?, code: String): Result<Any> {
+    fun register(userName: String?, password: String?, code: String?): Result {
         if (TextUtils.isEmpty(userName)) {
             throw UserNameEmptyException()
         }
@@ -97,7 +97,14 @@ class UserController : BaseController() {
         }
         val u = userMapper?.selectByExample(userExample)
         if (u != null && u.isNotEmpty()) {
-            throw UserNameExistsException()
+            throw UserNameExistsException()         //用户名已经存在了
+        }
+        val cachedCode = redisUtils?.get("${Constants.RedisKeys.KEY_LAST_VERIFY_CODE}$userName${Constants.CODE_TYPE_REGISTER}")
+        if (TextUtils.isEmpty(cachedCode)) {
+            return Results.error(-1, "验证码已失效，请重新获取")
+        }
+        if (cachedCode != code) {
+            return Results.error(-1, "验证码错误，请重新输入")
         }
         val userId = CharacterUtils.getRandomString(32)
         val user = User()
@@ -106,7 +113,8 @@ class UserController : BaseController() {
         user.password = password
         val affectCount = userMapper?.insert(user)
         if (affectCount == 1) {
-            return ResultUtil.success(user)
+            redisUtils?.remove("${Constants.RedisKeys.KEY_LAST_VERIFY_CODE}$userName${Constants.CODE_TYPE_REGISTER}")           //注册成功验证码使用之后就从内存中移除，并执行
+            return Results.success(user)
         }
         throw UserRegisterErrorException()
     }
@@ -115,12 +123,12 @@ class UserController : BaseController() {
      * 删除用户
      */
     @RequestMapping(method = [RequestMethod.DELETE])
-    fun deleteUser(userId: String?): Result<Any> {
+    fun deleteUser(userId: String?): Result {
         if (TextUtils.isEmpty(userId)) {
             throw UserDeleteByEmptyIdException()
         }
         if (userMapper?.deleteByPrimaryKey(userId!!) == 1) {
-            return ResultUtil.success()
+            return Results.success()
         }
         throw UserNotExistException()
     }
@@ -129,19 +137,19 @@ class UserController : BaseController() {
      * 修改用户
      */
     @RequestMapping(method = [RequestMethod.PUT])
-    fun updateUser(user: User?): Result<Any> {
+    fun updateUser(user: User?): Result {
         if (user == null || TextUtils.isEmpty(user.userId)) {
             throw UserNotExistException()
         }
         if (TextUtils.isEmpty(user.password) || TextUtils.isEmpty(user.userName)) {
-            return ResultUtil.error(-1, "用户名或密码不能为空", null)
+            return Results.error(-1, "用户名或密码不能为空", null)
         }
         val record = userMapper?.selectByPrimaryKey(user.userId!!)
         if (record != null) {
             record.userName = user.userName
             record.password = user.password
             if (userMapper?.updateByPrimaryKey(record) == 1) {
-                return ResultUtil.success(record)
+                return Results.success(record)
             } else {
                 throw UserUpdateErrorException()
             }
