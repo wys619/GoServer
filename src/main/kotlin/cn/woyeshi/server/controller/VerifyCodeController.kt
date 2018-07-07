@@ -26,10 +26,10 @@ class VerifyCodeController : BaseController() {
     @RequestMapping(method = [RequestMethod.GET])
     fun getVerifyCode(phone: String?, type: Int?): Result {
         if (TextUtils.isEmpty(phone)) {
-            return Results.error(-1, "请输入手机号码", null)
+            return Results.error(-1, "请输入手机号码")
         }
         if (type == null) {
-            return Results.error(-1, "请设置获取的验证码的类型", null)
+            return Results.error(-1, "请设置获取的验证码的类型")
         }
         var lastTime = redisUtils?.get(Constants.RedisKeys.KEY_LAST_VERIFY_CODE_TIME + phone + "$type")
         if (lastTime == null) {
@@ -41,7 +41,7 @@ class VerifyCodeController : BaseController() {
         val currentTime = System.currentTimeMillis()
         val remainTime = currentTime - lastTime.toLong()
         if (remainTime < CODE_GENERATE_TIME_INTERVAL) {        //两次时间间隔小于
-            return Results.error(-1, "${CODE_GENERATE_TIME_INTERVAL / 1000}秒之内只能获取一次验证码(${(CODE_GENERATE_TIME_INTERVAL - remainTime) / 1000}S)", null)
+            return Results.error(-1, "${CODE_GENERATE_TIME_INTERVAL / 1000}秒之内只能获取一次验证码(${(CODE_GENERATE_TIME_INTERVAL - remainTime) / 1000}S)")
         }
         redisUtils?.set(Constants.RedisKeys.KEY_LAST_VERIFY_CODE + "$phone$type", "6666", CODE_GENERATE_TIME_INTERVAL)         //测试用的默认验证码为6666
         redisUtils?.set(Constants.RedisKeys.KEY_LAST_VERIFY_CODE_TIME + phone + "$type", "${System.currentTimeMillis()}", CODE_GENERATE_TIME_INTERVAL)

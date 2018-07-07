@@ -49,7 +49,7 @@ class UserController : BaseController() {
         } else if (TextUtils.isNotEmpty(password)) {                //登录的时候用户名或者密码不正确
             return onLoginFail(userName)
         }
-        return Results.success(list)
+        return Results.success(list ?: ArrayList<Any>())
     }
 
     //登录失败
@@ -61,9 +61,9 @@ class UserController : BaseController() {
         }
         val users = userMapper?.selectByExample(userNameExample)
         return if (users == null || users.isEmpty()) {
-            Results.error(-1, "账号不存在", null)
+            Results.error(-1, "账号不存在")
         } else {
-            Results.error(-1, "您输入的密码不正确", null)
+            Results.error(-1, "您输入的密码不正确")
         }
     }
 
@@ -142,7 +142,7 @@ class UserController : BaseController() {
             throw UserNotExistException()
         }
         if (TextUtils.isEmpty(user.password) || TextUtils.isEmpty(user.userName)) {
-            return Results.error(-1, "用户名或密码不能为空", null)
+            return Results.error(-1, "用户名或密码不能为空")
         }
         val record = userMapper?.selectByPrimaryKey(user.userId!!)
         if (record != null) {

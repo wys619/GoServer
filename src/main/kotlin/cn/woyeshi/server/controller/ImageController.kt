@@ -60,6 +60,10 @@ class ImageController : BaseController() {
     }
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {
+        val dir = File(location)
+        if (!dir.exists()) {
+            dir.mkdirs()
+        }
         val f = File("$location$cacheName")
         if (f.exists()) {
             return true

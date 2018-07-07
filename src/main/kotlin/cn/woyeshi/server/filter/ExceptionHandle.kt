@@ -14,13 +14,13 @@ class ExceptionHandle {
 
     @ExceptionHandler(value = [Exception::class])
     @ResponseBody
-    fun handle(e: Exception): Result{
+    fun handle(e: Exception): Result {
         return if (e is BaseException) {
-            Results.error(e.code, e.message ?: "", null)
+            Results.error(e.code, e.message ?: "")
         } else {
             //将系统异常以打印出来
             logger.info("[系统异常]", e)
-            Results.error(-1, "未知错误", null)
+            Results.error(-1, "未知错误")
         }
     }
 
