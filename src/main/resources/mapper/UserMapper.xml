@@ -6,6 +6,18 @@
       <idArg column="user_id" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="user_name" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="password" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="nickname" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="birthday" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="gender" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="avartar" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="user_type" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="city" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="we_chat_id" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="qq" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="sina" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="ali_pay" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -67,7 +79,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    user_id, user_name, password
+    user_id, user_name, password, nickname, birthday, gender, avartar, user_type, city, 
+    we_chat_id, qq, sina, ali_pay, email, phone
   </sql>
   <select id="selectByExample" parameterType="cn.woyeshi.server.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -100,9 +113,17 @@
     </if>
   </delete>
   <insert id="insert" parameterType="cn.woyeshi.server.domain.User">
-    insert into t_user (user_id, user_name, password
+    insert into t_user (user_id, user_name, password, 
+      nickname, birthday, gender, 
+      avartar, user_type, city, 
+      we_chat_id, qq, sina, 
+      ali_pay, email, phone
       )
-    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}
+    values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{nickname,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{gender,jdbcType=CHAR}, 
+      #{avartar,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR}, #{city,jdbcType=VARCHAR}, 
+      #{weChatId,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{sina,jdbcType=VARCHAR}, 
+      #{aliPay,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="cn.woyeshi.server.domain.User">
@@ -117,6 +138,42 @@
       <if test="password != null">
         password,
       </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="avartar != null">
+        avartar,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="weChatId != null">
+        we_chat_id,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="sina != null">
+        sina,
+      </if>
+      <if test="aliPay != null">
+        ali_pay,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -127,6 +184,42 @@
       </if>
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=CHAR},
+      </if>
+      <if test="avartar != null">
+        #{avartar,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=CHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="weChatId != null">
+        #{weChatId,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="sina != null">
+        #{sina,jdbcType=VARCHAR},
+      </if>
+      <if test="aliPay != null">
+        #{aliPay,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -148,6 +241,42 @@
       <if test="record.password != null">
         password = #{record.password,jdbcType=VARCHAR},
       </if>
+      <if test="record.nickname != null">
+        nickname = #{record.nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.gender != null">
+        gender = #{record.gender,jdbcType=CHAR},
+      </if>
+      <if test="record.avartar != null">
+        avartar = #{record.avartar,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=CHAR},
+      </if>
+      <if test="record.city != null">
+        city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weChatId != null">
+        we_chat_id = #{record.weChatId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.qq != null">
+        qq = #{record.qq,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sina != null">
+        sina = #{record.sina,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliPay != null">
+        ali_pay = #{record.aliPay,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null">
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -157,7 +286,19 @@
     update t_user
     set user_id = #{record.userId,jdbcType=VARCHAR},
       user_name = #{record.userName,jdbcType=VARCHAR},
-      password = #{record.password,jdbcType=VARCHAR}
+      password = #{record.password,jdbcType=VARCHAR},
+      nickname = #{record.nickname,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=TIMESTAMP},
+      gender = #{record.gender,jdbcType=CHAR},
+      avartar = #{record.avartar,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=CHAR},
+      city = #{record.city,jdbcType=VARCHAR},
+      we_chat_id = #{record.weChatId,jdbcType=VARCHAR},
+      qq = #{record.qq,jdbcType=VARCHAR},
+      sina = #{record.sina,jdbcType=VARCHAR},
+      ali_pay = #{record.aliPay,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -171,13 +312,61 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=TIMESTAMP},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=CHAR},
+      </if>
+      <if test="avartar != null">
+        avartar = #{avartar,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=CHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="weChatId != null">
+        we_chat_id = #{weChatId,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="sina != null">
+        sina = #{sina,jdbcType=VARCHAR},
+      </if>
+      <if test="aliPay != null">
+        ali_pay = #{aliPay,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
   <update id="updateByPrimaryKey" parameterType="cn.woyeshi.server.domain.User">
     update t_user
     set user_name = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR}
+      password = #{password,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=TIMESTAMP},
+      gender = #{gender,jdbcType=CHAR},
+      avartar = #{avartar,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=CHAR},
+      city = #{city,jdbcType=VARCHAR},
+      we_chat_id = #{weChatId,jdbcType=VARCHAR},
+      qq = #{qq,jdbcType=VARCHAR},
+      sina = #{sina,jdbcType=VARCHAR},
+      ali_pay = #{aliPay,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>
