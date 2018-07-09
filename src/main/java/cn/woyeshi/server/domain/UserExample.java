@@ -1144,6 +1144,136 @@ public class UserExample {
             addCriterion("phone not between", value1, value2, "phone");
             return (Criteria) this;
         }
+
+        public Criteria andRegTimeIsNull() {
+            addCriterion("reg_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeIsNotNull() {
+            addCriterion("reg_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeEqualTo(Date value) {
+            addCriterion("reg_time =", value, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeNotEqualTo(Date value) {
+            addCriterion("reg_time <>", value, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeGreaterThan(Date value) {
+            addCriterion("reg_time >", value, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("reg_time >=", value, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeLessThan(Date value) {
+            addCriterion("reg_time <", value, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeLessThanOrEqualTo(Date value) {
+            addCriterion("reg_time <=", value, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeIn(List<Date> values) {
+            addCriterion("reg_time in", values, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeNotIn(List<Date> values) {
+            addCriterion("reg_time not in", values, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeBetween(Date value1, Date value2) {
+            addCriterion("reg_time between", value1, value2, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andRegTimeNotBetween(Date value1, Date value2) {
+            addCriterion("reg_time not between", value1, value2, "regTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenIsNull() {
+            addCriterion("token is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenIsNotNull() {
+            addCriterion("token is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenEqualTo(String value) {
+            addCriterion("token =", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotEqualTo(String value) {
+            addCriterion("token <>", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenGreaterThan(String value) {
+            addCriterion("token >", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenGreaterThanOrEqualTo(String value) {
+            addCriterion("token >=", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenLessThan(String value) {
+            addCriterion("token <", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenLessThanOrEqualTo(String value) {
+            addCriterion("token <=", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenLike(String value) {
+            addCriterion("token like", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotLike(String value) {
+            addCriterion("token not like", value, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenIn(List<String> values) {
+            addCriterion("token in", values, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotIn(List<String> values) {
+            addCriterion("token not in", values, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenBetween(String value1, String value2) {
+            addCriterion("token between", value1, value2, "token");
+            return (Criteria) this;
+        }
+
+        public Criteria andTokenNotBetween(String value1, String value2) {
+            addCriterion("token not between", value1, value2, "token");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

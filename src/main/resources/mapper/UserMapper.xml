@@ -18,6 +18,8 @@
       <arg column="ali_pay" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="email" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="phone" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="reg_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="token" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -80,7 +82,7 @@
   </sql>
   <sql id="Base_Column_List">
     user_id, user_name, password, nickname, birthday, gender, avartar, user_type, city, 
-    we_chat_id, qq, sina, ali_pay, email, phone
+    we_chat_id, qq, sina, ali_pay, email, phone, reg_time, token
   </sql>
   <select id="selectByExample" parameterType="cn.woyeshi.server.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -117,14 +119,14 @@
       nickname, birthday, gender, 
       avartar, user_type, city, 
       we_chat_id, qq, sina, 
-      ali_pay, email, phone
-      )
+      ali_pay, email, phone, 
+      reg_time, token)
     values (#{userId,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{nickname,jdbcType=VARCHAR}, #{birthday,jdbcType=TIMESTAMP}, #{gender,jdbcType=CHAR}, 
       #{avartar,jdbcType=VARCHAR}, #{userType,jdbcType=CHAR}, #{city,jdbcType=VARCHAR}, 
       #{weChatId,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, #{sina,jdbcType=VARCHAR}, 
-      #{aliPay,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}
-      )
+      #{aliPay,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{regTime,jdbcType=TIMESTAMP}, #{token,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.woyeshi.server.domain.User">
     insert into t_user
@@ -174,6 +176,12 @@
       <if test="phone != null">
         phone,
       </if>
+      <if test="regTime != null">
+        reg_time,
+      </if>
+      <if test="token != null">
+        token,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -220,6 +228,12 @@
       </if>
       <if test="phone != null">
         #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="regTime != null">
+        #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="token != null">
+        #{token,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -277,6 +291,12 @@
       <if test="record.phone != null">
         phone = #{record.phone,jdbcType=VARCHAR},
       </if>
+      <if test="record.regTime != null">
+        reg_time = #{record.regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.token != null">
+        token = #{record.token,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -298,7 +318,9 @@
       sina = #{record.sina,jdbcType=VARCHAR},
       ali_pay = #{record.aliPay,jdbcType=VARCHAR},
       email = #{record.email,jdbcType=VARCHAR},
-      phone = #{record.phone,jdbcType=VARCHAR}
+      phone = #{record.phone,jdbcType=VARCHAR},
+      reg_time = #{record.regTime,jdbcType=TIMESTAMP},
+      token = #{record.token,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -348,6 +370,12 @@
       <if test="phone != null">
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="regTime != null">
+        reg_time = #{regTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="token != null">
+        token = #{token,jdbcType=VARCHAR},
+      </if>
     </set>
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
@@ -366,7 +394,9 @@
       sina = #{sina,jdbcType=VARCHAR},
       ali_pay = #{aliPay,jdbcType=VARCHAR},
       email = #{email,jdbcType=VARCHAR},
-      phone = #{phone,jdbcType=VARCHAR}
+      phone = #{phone,jdbcType=VARCHAR},
+      reg_time = #{regTime,jdbcType=TIMESTAMP},
+      token = #{token,jdbcType=VARCHAR}
     where user_id = #{userId,jdbcType=VARCHAR}
   </update>
 </mapper>

@@ -5,7 +5,7 @@
 <!-- 配置生成器 -->
 <generatorConfiguration>
 
-    <classPathEntry location="/Users/wys/Documents/gitProjects/GoServer/libs/mysql-connector-java-8.0.11.jar" />
+    <classPathEntry location="/Users/wys/Documents/libs/mysql-connector-java-8.0.11.jar"/>
 
     <!--id:必选，上下文id，用于在生成错误时提示-->
     <context id="mysql" targetRuntime="MyBatis3">
@@ -70,7 +70,7 @@
          -->
         <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources">
             <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
-            <property name="enableSubPackages" value="true"/>
+            <property name="enableSubPackages" value="false"/>
         </sqlMapGenerator>
 
 

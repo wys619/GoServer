@@ -2,6 +2,7 @@ package cn.woyeshi.server.mapper;
 
 import cn.woyeshi.server.domain.User;
 import cn.woyeshi.server.domain.UserExample;
+
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;

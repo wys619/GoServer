@@ -1,4 +1,4 @@
-package cn.woyeshi.server.common
+package cn.woyeshi.server.configs
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor

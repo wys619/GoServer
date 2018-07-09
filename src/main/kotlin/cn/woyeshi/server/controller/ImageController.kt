@@ -38,7 +38,6 @@ class ImageController : BaseController() {
         if (TextUtils.isEmpty(md5)) {
             throw BaseException(-1, "文件摘要失败")
         }
-        Logger.i(ImageController::class.java, "token == $token")
         when (contentType) {
             "image/png" -> {
                 val cacheName = "$md5.png"

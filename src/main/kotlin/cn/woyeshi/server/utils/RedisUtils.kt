@@ -1,6 +1,5 @@
 package cn.woyeshi.server.utils
 
-import java.io.Serializable
 import java.util.concurrent.TimeUnit
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
@@ -36,7 +35,7 @@ class RedisUtils {
     fun removePattern(pattern: String) {
         val keys = redisTemplate!!.keys(pattern)
         if (keys.size > 0)
-            redisTemplate!!.delete(keys)
+            redisTemplate.delete(keys)
     }
 
     /**
@@ -67,10 +66,8 @@ class RedisUtils {
      * @return
      */
     operator fun get(key: String): String? {
-        var result: String?
         val operations = redisTemplate!!.opsForValue()
-        result = operations.get(key)
-        return result
+        return operations.get(key)
     }
 
     /**
@@ -105,7 +102,7 @@ class RedisUtils {
         try {
             val operations: ValueOperations<String, String> = redisTemplate!!.opsForValue()
             operations.set(key, value)
-            redisTemplate!!.expire(key, expireTime!!, TimeUnit.SECONDS)
+            redisTemplate.expire(key, expireTime!!, TimeUnit.SECONDS)
             result = true
         } catch (e: Exception) {
             e.printStackTrace()

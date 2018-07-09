@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestController
+import java.util.*
 
 
 @RequestMapping("user")
@@ -70,10 +71,8 @@ class UserController : BaseController() {
     //
     private fun onLoginSuccess(list: List<User>) {
         val user: User = list[0]
-        val token = CharacterUtils.getRandomString(32)
-        redisUtils?.set("token_${user.userId}", token, 86400000L)          //登录信息有效期为24小时
+        val token = UserUtils.setToken(redisUtils!!, user.userId)
         user.token = token
-        Logger.i(UserController::class.java, "user token generated:" + redisUtils?.get("token_${user.userId}"))
     }
 
     /**
@@ -111,9 +110,12 @@ class UserController : BaseController() {
         user.userId = userId
         user.userName = userName
         user.password = password
+        user.regTime = Date()               //注册时间
         val affectCount = userMapper?.insert(user)
         if (affectCount == 1) {
             redisUtils?.remove("${Constants.RedisKeys.KEY_LAST_VERIFY_CODE}$userName${Constants.CODE_TYPE_REGISTER}")           //注册成功验证码使用之后就从内存中移除，并执行
+            val token = UserUtils.setToken(redisUtils!!, userId)        //注册成功之后生成token并返回
+            user.token = token
             return Results.success(user)
         }
         throw UserRegisterErrorException()

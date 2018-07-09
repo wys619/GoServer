@@ -1,7 +1,10 @@
 package cn.woyeshi.server.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import java.util.Date;
 
+@JsonSerialize(include=JsonSerialize.Inclusion.NON_NULL)
 public class User {
     private String userId;
 
@@ -33,9 +36,11 @@ public class User {
 
     private String phone;
 
+    private Date regTime;
+
     private String token;
 
-    public User(String userId, String userName, String password, String nickname, Date birthday, String gender, String avartar, String userType, String city, String weChatId, String qq, String sina, String aliPay, String email, String phone) {
+    public User(String userId, String userName, String password, String nickname, Date birthday, String gender, String avartar, String userType, String city, String weChatId, String qq, String sina, String aliPay, String email, String phone, Date regTime, String token) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -51,13 +56,7 @@ public class User {
         this.aliPay = aliPay;
         this.email = email;
         this.phone = phone;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
+        this.regTime = regTime;
         this.token = token;
     }
 
@@ -183,5 +182,21 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
+    }
+
+    public Date getRegTime() {
+        return regTime;
+    }
+
+    public void setRegTime(Date regTime) {
+        this.regTime = regTime;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token == null ? null : token.trim();
     }
 }
