@@ -1,6 +1,7 @@
 package cn.woyeshi.server.controller
 
 import cn.woyeshi.server.domain.Result
+import cn.woyeshi.server.domain.UserExample
 import cn.woyeshi.server.mapper.UserMapper
 import cn.woyeshi.server.utils.Constants
 import cn.woyeshi.server.utils.RedisUtils
@@ -36,6 +37,23 @@ class VerifyCodeController : BaseController() {
         }
         if (!isTypeValid(type)) {
             return Results.error(-1, "验证码类型错误")
+        }
+        val userExample = UserExample()
+        val criteria = userExample.createCriteria()
+        criteria.andUserNameEqualTo(phone)
+        val users = userMapper?.selectByExample(userExample)
+        val userExists = users != null && users.size > 0
+        when (type) {
+            Constants.CODE_TYPE_REGISTER -> {
+                if (userExists) {
+                    return Results.error(-1, "该用户已经注册")
+                }
+            }
+            Constants.CODE_TYPE_FIND_PWD, Constants.CODE_TYPE_MODE_PWD -> {
+                if (!userExists) {
+                    return Results.error(-1, "该用户不存在")
+                }
+            }
         }
         val currentTime = System.currentTimeMillis()
         val remainTime = currentTime - lastTime.toLong()
