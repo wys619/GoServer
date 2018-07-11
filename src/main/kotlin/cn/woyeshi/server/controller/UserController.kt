@@ -8,10 +8,7 @@ import cn.woyeshi.server.mapper.UserMapper
 import cn.woyeshi.server.utils.*
 import com.github.pagehelper.PageHelper
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import java.util.*
 
 
@@ -139,24 +136,18 @@ class UserController : BaseController() {
      * 修改用户
      */
     @RequestMapping(method = [RequestMethod.PUT])
-    fun updateUser(user: User?): Result {
+    fun updateUser(user: User?, @RequestHeader token: String?): Result {
         if (user == null || TextUtils.isEmpty(user.userId)) {
             throw UserNotExistException()
         }
-        if (TextUtils.isEmpty(user.password) || TextUtils.isEmpty(user.userName)) {
-            return Results.error(-1, "用户名或密码不能为空")
+        val u = UserUtils.getUserInfoByToken(userMapper!!, redisUtils!!, token)
+        if (u == null || u.userId != user.userId) {
+            throw TokenInvalidException()
         }
-        val record = userMapper?.selectByPrimaryKey(user.userId!!)
-        if (record != null) {
-            record.userName = user.userName
-            record.password = user.password
-            if (userMapper?.updateByPrimaryKey(record) == 1) {
-                return Results.success(record)
-            } else {
-                throw UserUpdateErrorException()
-            }
+        if (userMapper?.updateByPrimaryKeySelective(user) == 1) {
+            return Results.success(userMapper?.selectByPrimaryKey(user.userId))
         } else {
-            throw UserNotExistException()
+            throw UserUpdateErrorException()
         }
     }
 

@@ -9,6 +9,7 @@ class ErrorCodes {
         const val ERROR_CODE_USER_ID_IS_EMPTY_EXCEPTION = -1005
         const val ERROR_CODE_USER_NOT_EXIST_EXCEPTION = -1005
         const val ERROR_CODE_USER_UPDATE_ERROR_EXCEPTION = -1006
+        const val ERROR_CODE_TOKEN_INVALID_EXCEPTION = -1007
 
     }
 }

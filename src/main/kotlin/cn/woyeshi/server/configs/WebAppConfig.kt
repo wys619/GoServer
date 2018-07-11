@@ -4,10 +4,13 @@ import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.web.servlet.MultipartConfigFactory
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.core.convert.converter.Converter
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
-
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.servlet.MultipartConfigElement
+
 
 @Configuration
 class WebAppConfig : WebMvcConfigurerAdapter() {
@@ -38,5 +41,13 @@ class WebAppConfig : WebMvcConfigurerAdapter() {
         //设置总上传数据总大小
         factory.setMaxRequestSize("10MB")
         return factory.createMultipartConfig()
+    }
+
+    @Bean
+    fun addNewConvert(): Converter<String, Date> {
+        return Converter { source ->
+            val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+            sdf.parse(source)
+        }
     }
 }

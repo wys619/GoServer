@@ -21,13 +21,19 @@ object UserUtils {
     }
 
     //判断token是否有效
-    fun isTokenValid(redisUtils: RedisUtils, token: String): Boolean {
-        return TextUtils.isNotEmpty(redisUtils[token])
+    fun isTokenValid(redisUtils: RedisUtils, token: String?): Boolean {
+        if (TextUtils.isEmpty(token)) {
+            return false
+        }
+        return TextUtils.isNotEmpty(redisUtils[token!!])
     }
 
     //用token查询用户信息
-    fun getUserInfoByToken(userMapper: UserMapper, redisUtils: RedisUtils, token: String): User? {
-        return userMapper.selectByPrimaryKey(redisUtils[token])
+    fun getUserInfoByToken(userMapper: UserMapper, redisUtils: RedisUtils, token: String?): User? {
+        if (TextUtils.isEmpty(token)) {
+            return null
+        }
+        return userMapper.selectByPrimaryKey(redisUtils[token!!])
     }
 
 }

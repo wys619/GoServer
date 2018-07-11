@@ -12,3 +12,4 @@ class UserRegisterErrorException : UserException(code = ErrorCodes.ERROR_CODE_RE
 class UserDeleteByEmptyIdException : UserException(code = ErrorCodes.ERROR_CODE_USER_ID_IS_EMPTY_EXCEPTION, msg = "用户ID不能为空")
 class UserNotExistException : UserException(code = ErrorCodes.ERROR_CODE_USER_NOT_EXIST_EXCEPTION, msg = "该用户不存在")
 class UserUpdateErrorException : UserException(code = ErrorCodes.ERROR_CODE_USER_UPDATE_ERROR_EXCEPTION, msg = "用户信息更新失败")
+class TokenInvalidException : UserException(code = ErrorCodes.ERROR_CODE_TOKEN_INVALID_EXCEPTION, msg = "登录信息已过期")
