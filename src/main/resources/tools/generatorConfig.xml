@@ -5,7 +5,7 @@
 <!-- 配置生成器 -->
 <generatorConfiguration>
 
-    <classPathEntry location="/Users/wys/Documents/libs/mysql-connector-java-8.0.11.jar"/>
+    <classPathEntry location="/Users/wys/Documents/libs/mysql-connector-java-5.1.44.jar"/>
 
     <!--id:必选，上下文id，用于在生成错误时提示-->
     <context id="mysql" targetRuntime="MyBatis3">
@@ -23,7 +23,7 @@
 
         <!--jdbc的数据库连接 -->
         <jdbcConnection
-                driverClass="com.mysql.cj.jdbc.Driver"
+                driverClass="com.mysql.jdbc.Driver"
                 connectionURL="jdbc:mysql://127.0.0.1:3306/gogogo?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useSSL=false"
                 userId="root"
                 password="root">

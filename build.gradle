@@ -49,7 +49,7 @@ dependencies {
     compile('org.springframework.boot:spring-boot-starter')
     compile("org.springframework.data:spring-data-redis")
 
-    runtime('mysql:mysql-connector-java:8.0.11')
+    runtime('mysql:mysql-connector-java')
     providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
     compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8:${kotlinVersion}")
