@@ -38,24 +38,25 @@ class ImageController : BaseController() {
         if (TextUtils.isEmpty(md5)) {
             throw BaseException(-1, "文件摘要失败")
         }
+        val cacheName: String
         when (contentType) {
             "image/png" -> {
-                val cacheName = "$md5.png"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用")
+                cacheName = "$md5.png"
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", "https://res.woyeshi.cn/images/$cacheName")
             }
             "image/jpg" -> {
-                val cacheName = "$md5.jpg"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用")
+                cacheName = "$md5.jpg"
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", "https://res.woyeshi.cn/images/$cacheName")
             }
             "image/jpeg" -> {
-                val cacheName = "$md5.jpeg"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用")
+                cacheName = "$md5.jpeg"
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", "https://res.woyeshi.cn/images/$cacheName")
             }
             else -> {
                 throw BaseException(-1, "目前只支持jpg/jpeg或者png格式的图片")
             }
         }
-        return Results.success()
+        return Results.success("https://res.woyeshi.cn/images/$cacheName")
     }
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {
