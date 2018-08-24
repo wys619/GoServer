@@ -1,6 +1,7 @@
 package cn.woyeshi.server.controller
 
 import cn.woyeshi.server.domain.Result
+import cn.woyeshi.server.domain.UploadResult
 import cn.woyeshi.server.exceptions.BaseException
 import cn.woyeshi.server.utils.Logger
 import cn.woyeshi.server.utils.MD5
@@ -42,21 +43,21 @@ class ImageController : BaseController() {
         when (contentType) {
             "image/png" -> {
                 cacheName = "$md5.png"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", "https://res.woyeshi.cn/images/$cacheName")
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("https://res.woyeshi.cn/images/$cacheName"))
             }
             "image/jpg" -> {
                 cacheName = "$md5.jpg"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", "https://res.woyeshi.cn/images/$cacheName")
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("https://res.woyeshi.cn/images/$cacheName"))
             }
             "image/jpeg" -> {
                 cacheName = "$md5.jpeg"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", "https://res.woyeshi.cn/images/$cacheName")
+                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("https://res.woyeshi.cn/images/$cacheName"))
             }
             else -> {
                 throw BaseException(-1, "目前只支持jpg/jpeg或者png格式的图片")
             }
         }
-        return Results.success("https://res.woyeshi.cn/images/$cacheName")
+        return Results.success(UploadResult("https://res.woyeshi.cn/images/$cacheName"))
     }
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {
