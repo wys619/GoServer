@@ -136,7 +136,7 @@ class UserController : BaseController() {
      * 修改用户
      */
     @RequestMapping(method = [RequestMethod.PUT])
-    fun updateUser(user: User?, @RequestHeader token: String?): Result {
+    fun updateUser(@RequestBody user: User?, @RequestHeader token: String?): Result {
         if (user == null || TextUtils.isEmpty(user.userId)) {
             throw UserNotExistException()
         }

@@ -33,7 +33,8 @@ object UserUtils {
         if (TextUtils.isEmpty(token)) {
             return null
         }
-        return userMapper.selectByPrimaryKey(redisUtils[token!!])
+        val userId = redisUtils[token!!]
+        return userMapper.selectByPrimaryKey(userId)
     }
 
 }
