@@ -22,9 +22,13 @@ class ImageController : BaseController() {
     @Value("\${cbs.imagesDir}")
     private val location = ""
 
+    companion object {
+        const val imageDomain = "http://192.168.190.100:8081/images/"
+    }
+
     @RequestMapping("/upload", method = [RequestMethod.POST])
     @ResponseBody
-    fun uploadImage(@RequestParam("file") file: MultipartFile, @RequestHeader("token") token: String): Result {
+    fun uploadImage(@RequestParam("file") file: MultipartFile): Result {
         if (file.isEmpty) {
             throw BaseException(-1, "文件内容为空，请先选择一个文件！")
         }
@@ -39,25 +43,22 @@ class ImageController : BaseController() {
         if (TextUtils.isEmpty(md5)) {
             throw BaseException(-1, "文件摘要失败")
         }
-        val cacheName: String
-        when (contentType) {
+        val cacheName: String = when (contentType) {
             "image/png" -> {
-                cacheName = "$md5.png"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("https://res.woyeshi.cn/images/$cacheName"))
+                "$md5.png"
             }
             "image/jpg" -> {
-                cacheName = "$md5.jpg"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("https://res.woyeshi.cn/images/$cacheName"))
+                "$md5.jpg"
             }
             "image/jpeg" -> {
-                cacheName = "$md5.jpeg"
-                if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("https://res.woyeshi.cn/images/$cacheName"))
+                "$md5.jpeg"
             }
             else -> {
-                throw BaseException(-1, "目前只支持jpg/jpeg或者png格式的图片")
+                "$md5"
             }
         }
-        return Results.success(UploadResult("https://res.woyeshi.cn/images/$cacheName"))
+        if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("$imageDomain$cacheName"))
+        return Results.success(UploadResult("$imageDomain$cacheName"))
     }
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {
