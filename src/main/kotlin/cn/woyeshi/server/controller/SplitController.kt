@@ -35,7 +35,9 @@ class SplitController : BaseController() {
     fun uploadSplit(
             @RequestParam("file") file: MultipartFile,
             @RequestParam("splitVersion") splitVersion: String,
-            @RequestParam("appVersion") appVersion: String
+            @RequestParam("appVersion") appVersion: String,
+            @RequestParam("isAlert") isAlert: String
+
     ): Result {
         if (file.isEmpty) {
             throw BaseException(-1, "文件内容为空，请先选择一个文件！")
@@ -61,6 +63,7 @@ class SplitController : BaseController() {
             val info = list[0]
             info.splitVersion = splitVersion
             info.splitConfigUrl = cacheName
+            info.isAlert = isAlert
             val count = splitInfoMapper?.updateByPrimaryKey(info)
             return if (count == 1) {
                 Results.success(info)
@@ -72,6 +75,7 @@ class SplitController : BaseController() {
             info.splitConfigUrl = cacheName
             info.appVersion = appVersion
             info.splitVersion = splitVersion
+            info.isAlert = isAlert
             val count = splitInfoMapper?.insert(info)
             return if (count == 1) {
                 Results.success(info)

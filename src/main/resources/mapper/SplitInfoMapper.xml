@@ -7,6 +7,7 @@
       <arg column="app_version" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="split_version" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="split_config_url" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_alert" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -68,7 +69,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    split_id, app_version, split_version, split_config_url
+    split_id, app_version, split_version, split_config_url, is_alert
   </sql>
   <select id="selectByExample" parameterType="cn.woyeshi.server.domain.SplitInfoExample" resultMap="BaseResultMap">
     select
@@ -102,9 +103,9 @@
   </delete>
   <insert id="insert" parameterType="cn.woyeshi.server.domain.SplitInfo">
     insert into t_split_info (split_id, app_version, split_version, 
-      split_config_url)
+      split_config_url, is_alert)
     values (#{splitId,jdbcType=INTEGER}, #{appVersion,jdbcType=VARCHAR}, #{splitVersion,jdbcType=VARCHAR}, 
-      #{splitConfigUrl,jdbcType=VARCHAR})
+      #{splitConfigUrl,jdbcType=VARCHAR}, #{isAlert,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.woyeshi.server.domain.SplitInfo">
     insert into t_split_info
@@ -121,6 +122,9 @@
       <if test="splitConfigUrl != null">
         split_config_url,
       </if>
+      <if test="isAlert != null">
+        is_alert,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="splitId != null">
@@ -134,6 +138,9 @@
       </if>
       <if test="splitConfigUrl != null">
         #{splitConfigUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isAlert != null">
+        #{isAlert,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -158,6 +165,9 @@
       <if test="record.splitConfigUrl != null">
         split_config_url = #{record.splitConfigUrl,jdbcType=VARCHAR},
       </if>
+      <if test="record.isAlert != null">
+        is_alert = #{record.isAlert,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -168,7 +178,8 @@
     set split_id = #{record.splitId,jdbcType=INTEGER},
       app_version = #{record.appVersion,jdbcType=VARCHAR},
       split_version = #{record.splitVersion,jdbcType=VARCHAR},
-      split_config_url = #{record.splitConfigUrl,jdbcType=VARCHAR}
+      split_config_url = #{record.splitConfigUrl,jdbcType=VARCHAR},
+      is_alert = #{record.isAlert,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -185,6 +196,9 @@
       <if test="splitConfigUrl != null">
         split_config_url = #{splitConfigUrl,jdbcType=VARCHAR},
       </if>
+      <if test="isAlert != null">
+        is_alert = #{isAlert,jdbcType=CHAR},
+      </if>
     </set>
     where split_id = #{splitId,jdbcType=INTEGER}
   </update>
@@ -192,7 +206,8 @@
     update t_split_info
     set app_version = #{appVersion,jdbcType=VARCHAR},
       split_version = #{splitVersion,jdbcType=VARCHAR},
-      split_config_url = #{splitConfigUrl,jdbcType=VARCHAR}
+      split_config_url = #{splitConfigUrl,jdbcType=VARCHAR},
+      is_alert = #{isAlert,jdbcType=CHAR}
     where split_id = #{splitId,jdbcType=INTEGER}
   </update>
 </mapper>

@@ -9,11 +9,14 @@ public class SplitInfo {
 
     private String splitConfigUrl;
 
-    public SplitInfo(Integer splitId, String appVersion, String splitVersion, String splitConfigUrl) {
+    private String isAlert;
+
+    public SplitInfo(Integer splitId, String appVersion, String splitVersion, String splitConfigUrl, String isAlert) {
         this.splitId = splitId;
         this.appVersion = appVersion;
         this.splitVersion = splitVersion;
         this.splitConfigUrl = splitConfigUrl;
+        this.isAlert = isAlert;
     }
 
     public SplitInfo() {
@@ -50,5 +53,13 @@ public class SplitInfo {
 
     public void setSplitConfigUrl(String splitConfigUrl) {
         this.splitConfigUrl = splitConfigUrl == null ? null : splitConfigUrl.trim();
+    }
+
+    public String getIsAlert() {
+        return isAlert;
+    }
+
+    public void setIsAlert(String isAlert) {
+        this.isAlert = isAlert == null ? null : isAlert.trim();
     }
 }

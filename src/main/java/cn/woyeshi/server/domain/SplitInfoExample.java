@@ -373,6 +373,76 @@ public class SplitInfoExample {
             addCriterion("split_config_url not between", value1, value2, "splitConfigUrl");
             return (Criteria) this;
         }
+
+        public Criteria andIsAlertIsNull() {
+            addCriterion("is_alert is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertIsNotNull() {
+            addCriterion("is_alert is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertEqualTo(String value) {
+            addCriterion("is_alert =", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertNotEqualTo(String value) {
+            addCriterion("is_alert <>", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertGreaterThan(String value) {
+            addCriterion("is_alert >", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertGreaterThanOrEqualTo(String value) {
+            addCriterion("is_alert >=", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertLessThan(String value) {
+            addCriterion("is_alert <", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertLessThanOrEqualTo(String value) {
+            addCriterion("is_alert <=", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertLike(String value) {
+            addCriterion("is_alert like", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertNotLike(String value) {
+            addCriterion("is_alert not like", value, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertIn(List<String> values) {
+            addCriterion("is_alert in", values, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertNotIn(List<String> values) {
+            addCriterion("is_alert not in", values, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertBetween(String value1, String value2) {
+            addCriterion("is_alert between", value1, value2, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsAlertNotBetween(String value1, String value2) {
+            addCriterion("is_alert not between", value1, value2, "isAlert");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
