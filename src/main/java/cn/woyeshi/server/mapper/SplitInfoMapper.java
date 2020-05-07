@@ -3,8 +3,13 @@ package cn.woyeshi.server.mapper;
 import cn.woyeshi.server.domain.SplitInfo;
 import cn.woyeshi.server.domain.SplitInfoExample;
 import java.util.List;
-import org.apache.ibatis.annotations.Param;
 
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
+
+@Service("splitInfoMapper")
+@Mapper
 public interface SplitInfoMapper {
     long countByExample(SplitInfoExample example);
 

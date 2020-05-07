@@ -1,11 +1,14 @@
 package cn.woyeshi.server.controller
 
 import cn.woyeshi.server.domain.Result
-import cn.woyeshi.server.domain.UploadResult
+import cn.woyeshi.server.domain.SplitInfo
+import cn.woyeshi.server.domain.SplitInfoExample
 import cn.woyeshi.server.exceptions.BaseException
+import cn.woyeshi.server.mapper.SplitInfoMapper
 import cn.woyeshi.server.utils.MD5
 import cn.woyeshi.server.utils.Results
 import cn.woyeshi.server.utils.TextUtils
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
@@ -18,12 +21,14 @@ import java.io.File
 @RequestMapping("split")
 class SplitController : BaseController() {
 
+    @Autowired
+    private val splitInfoMapper: SplitInfoMapper? = null
 
     @Value("\${cbs.splitDir}")
     private val location = ""
 
     @Value("\${splitDomain}")
-    private val imageDomain = "http://127.0.0.1:8081/split/"
+    private val splitDomain = ""
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
     @ResponseBody
@@ -47,9 +52,57 @@ class SplitController : BaseController() {
             throw BaseException(-1, "文件摘要失败")
         }
         val cacheName = "$md5"
-        if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("$imageDomain$cacheName"))
-        return Results.success(UploadResult("$imageDomain$cacheName"))
+        saveFile(cacheName, file)
+        val example = SplitInfoExample()
+        val criteria = example.createCriteria()
+        criteria.andAppVersionEqualTo(appVersion)
+        val list = splitInfoMapper?.selectByExample(example)
+        if (list?.isNotEmpty() == true) {
+            val info = list[0]
+            info.splitVersion = splitVersion
+            info.splitConfigUrl = cacheName
+            val count = splitInfoMapper?.updateByPrimaryKey(info)
+            return if (count == 1) {
+                Results.success(info)
+            } else {
+                Results.error(-1, "上传失败")
+            }
+        } else {
+            val info = SplitInfo()
+            info.splitConfigUrl = cacheName
+            info.appVersion = appVersion
+            info.splitVersion = splitVersion
+            val count = splitInfoMapper?.insert(info)
+            return if (count == 1) {
+                Results.success(info)
+            } else {
+                Results.error(-1, "上传失败")
+            }
+        }
     }
+
+
+    @RequestMapping("/query", method = [RequestMethod.GET])
+    @ResponseBody
+    fun querySplit(
+            @RequestParam("appVersion") appVersion: String
+    ): Result {
+        if (TextUtils.isEmpty(appVersion)) {
+            return Results.error(-1, "appVersion不能为空！")
+        }
+        val example = SplitInfoExample()
+        val criteria = example.createCriteria()
+        criteria.andAppVersionEqualTo(appVersion)
+        val list = splitInfoMapper?.selectByExample(example)
+        return if (list?.isNotEmpty() == true) {
+            val info = list[0]
+            info.splitConfigUrl = "$splitDomain${info.splitConfigUrl}"
+            Results.success(info)
+        } else {
+            Results.error(-1, "文件不存在！")
+        }
+    }
+
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {
         val dir = File(location)
