@@ -69,6 +69,7 @@ class SplitController : BaseController() {
         }
         info.splitVersion = splitVersion
         info.splitConfigUrl = cacheName
+        info.appVersion = appVersion
         info.isAlert = isAlert ?: "0"
         info.changeLog = changeLog ?: ""
         info.updateTime = Date(System.currentTimeMillis())
