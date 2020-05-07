@@ -18,18 +18,23 @@ class WebAppConfig : WebMvcConfigurerAdapter() {
     @Value("\${cbs.imagesPath}")
     private var mImagesPath: String? = null
 
+    @Value("\${cbs.splitPath}")
+    private var splitPath: String? = null
+
     override fun addResourceHandlers(registry: ResourceHandlerRegistry?) {
-        if (mImagesPath == "" || mImagesPath == "\${cbs.imagesPath}") {
-            var imagesPath = WebAppConfig::class.java.classLoader.getResource("")!!.path
-            if (imagesPath.indexOf(".jar") > 0) {
-                imagesPath = imagesPath.substring(0, imagesPath.indexOf(".jar"))
-            } else if (imagesPath.indexOf("classes") > 0) {
-                imagesPath = "file:" + imagesPath.substring(0, imagesPath.indexOf("classes"))
-            }
-            imagesPath = imagesPath.substring(0, imagesPath.lastIndexOf("/")) + "/images/"
-            mImagesPath = imagesPath
+        var imagesPath = WebAppConfig::class.java.classLoader.getResource("")!!.path
+        if (imagesPath.indexOf(".jar") > 0) {
+            imagesPath = imagesPath.substring(0, imagesPath.indexOf(".jar"))
+        } else if (imagesPath.indexOf("classes") > 0) {
+            imagesPath = "file:" + imagesPath.substring(0, imagesPath.indexOf("classes"))
         }
-        registry!!.addResourceHandler("/images/**").addResourceLocations(mImagesPath!!)
+        if (mImagesPath == "" || mImagesPath == "\${cbs.imagesPath}") {
+            mImagesPath = imagesPath.substring(0, imagesPath.lastIndexOf("/")) + "/files/"
+        }
+        if (splitPath == "" || splitPath == "\${cbs.splitPath}") {
+            splitPath = imagesPath.substring(0, imagesPath.lastIndexOf("/")) + "/split/"
+        }
+        registry!!.addResourceHandler("/files/**", "/split/**").addResourceLocations(mImagesPath!!, splitPath!!)
         super.addResourceHandlers(registry)
     }
 
@@ -37,9 +42,9 @@ class WebAppConfig : WebMvcConfigurerAdapter() {
     fun multipartConfigElement(): MultipartConfigElement {
         val factory = MultipartConfigFactory()
         //文件最大KB,MB
-        factory.setMaxFileSize("20MB")
+        factory.setMaxFileSize("200MB")
         //设置总上传数据总大小
-        factory.setMaxRequestSize("100MB")
+        factory.setMaxRequestSize("1000MB")
         return factory.createMultipartConfig()
     }
 

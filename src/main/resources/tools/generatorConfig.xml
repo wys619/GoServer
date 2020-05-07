@@ -5,7 +5,7 @@
 <!-- 配置生成器 -->
 <generatorConfiguration>
 
-    <classPathEntry location="/Users/wys/Documents/libs/mysql-connector-java-5.1.44.jar"/>
+    <classPathEntry location="/Users/wys/Documents/libs/mysql-connector-java-8.0.20.jar"/>
 
     <!--id:必选，上下文id，用于在生成错误时提示-->
     <context id="mysql" targetRuntime="MyBatis3">
@@ -24,9 +24,9 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://127.0.0.1:3306/gogogo?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useSSL=false"
-                userId="root"
-                password="root">
+                connectionURL="jdbc:mysql://192.168.192.20:3306/dynamic_feature?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useSSL=false"
+                userId="jenkins"
+                password="jenkins">
         </jdbcConnection>
 
         <!-- java类型处理器
@@ -92,7 +92,7 @@
             domainObjectName 给表对应的 model 起名字
             注意：大小写敏感问题。
          -->
-        <table tableName="t_user" domainObjectName="User">
+        <table tableName="t_split_info" domainObjectName="SplitInfo">
 
             <!--用来修改表中某个列的属性,一个table元素中可以有多个columnOverride元素哈.
                 property属性来指定列要生成的属性名称.

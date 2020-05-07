@@ -3,7 +3,6 @@ package cn.woyeshi.server.controller
 import cn.woyeshi.server.domain.Result
 import cn.woyeshi.server.domain.UploadResult
 import cn.woyeshi.server.exceptions.BaseException
-import cn.woyeshi.server.utils.Logger
 import cn.woyeshi.server.utils.MD5
 import cn.woyeshi.server.utils.Results
 import cn.woyeshi.server.utils.TextUtils
@@ -16,15 +15,14 @@ import java.io.File
 
 @Controller
 @RestController
-@RequestMapping("images")
-class ImageController : BaseController() {
+@RequestMapping("files")
+class FilesController : BaseController() {
 
     @Value("\${cbs.imagesDir}")
     private val location = ""
 
-    companion object {
-        const val imageDomain = "http://192.168.190.100:8081/images/"
-    }
+    @Value("\${filesDomain}")
+    private val filesDomain = ""
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
     @ResponseBody
@@ -57,8 +55,8 @@ class ImageController : BaseController() {
                 "$md5"
             }
         }
-        if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("$imageDomain$cacheName"))
-        return Results.success(UploadResult("$imageDomain$cacheName"))
+        if (saveFile(cacheName, file)) return Results.success("找到相同文件并已经复用", UploadResult("$filesDomain$cacheName"))
+        return Results.success(UploadResult("$filesDomain$cacheName"))
     }
 
     private fun saveFile(cacheName: String, file: MultipartFile): Boolean {
