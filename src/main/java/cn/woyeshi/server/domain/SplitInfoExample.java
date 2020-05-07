@@ -1,6 +1,7 @@
 package cn.woyeshi.server.domain;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class SplitInfoExample {
@@ -441,6 +442,136 @@ public class SplitInfoExample {
 
         public Criteria andIsAlertNotBetween(String value1, String value2) {
             addCriterion("is_alert not between", value1, value2, "isAlert");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNull() {
+            addCriterion("update_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIsNotNull() {
+            addCriterion("update_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeEqualTo(Date value) {
+            addCriterion("update_time =", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotEqualTo(Date value) {
+            addCriterion("update_time <>", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThan(Date value) {
+            addCriterion("update_time >", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("update_time >=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThan(Date value) {
+            addCriterion("update_time <", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("update_time <=", value, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeIn(List<Date> values) {
+            addCriterion("update_time in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotIn(List<Date> values) {
+            addCriterion("update_time not in", values, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeBetween(Date value1, Date value2) {
+            addCriterion("update_time between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("update_time not between", value1, value2, "updateTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogIsNull() {
+            addCriterion("change_log is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogIsNotNull() {
+            addCriterion("change_log is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogEqualTo(String value) {
+            addCriterion("change_log =", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogNotEqualTo(String value) {
+            addCriterion("change_log <>", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogGreaterThan(String value) {
+            addCriterion("change_log >", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogGreaterThanOrEqualTo(String value) {
+            addCriterion("change_log >=", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogLessThan(String value) {
+            addCriterion("change_log <", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogLessThanOrEqualTo(String value) {
+            addCriterion("change_log <=", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogLike(String value) {
+            addCriterion("change_log like", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogNotLike(String value) {
+            addCriterion("change_log not like", value, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogIn(List<String> values) {
+            addCriterion("change_log in", values, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogNotIn(List<String> values) {
+            addCriterion("change_log not in", values, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogBetween(String value1, String value2) {
+            addCriterion("change_log between", value1, value2, "changeLog");
+            return (Criteria) this;
+        }
+
+        public Criteria andChangeLogNotBetween(String value1, String value2) {
+            addCriterion("change_log not between", value1, value2, "changeLog");
             return (Criteria) this;
         }
     }

@@ -1,5 +1,7 @@
 package cn.woyeshi.server.domain;
 
+import java.util.Date;
+
 public class SplitInfo {
     private Integer splitId;
 
@@ -11,12 +13,18 @@ public class SplitInfo {
 
     private String isAlert;
 
-    public SplitInfo(Integer splitId, String appVersion, String splitVersion, String splitConfigUrl, String isAlert) {
+    private Date updateTime;
+
+    private String changeLog;
+
+    public SplitInfo(Integer splitId, String appVersion, String splitVersion, String splitConfigUrl, String isAlert, Date updateTime, String changeLog) {
         this.splitId = splitId;
         this.appVersion = appVersion;
         this.splitVersion = splitVersion;
         this.splitConfigUrl = splitConfigUrl;
         this.isAlert = isAlert;
+        this.updateTime = updateTime;
+        this.changeLog = changeLog;
     }
 
     public SplitInfo() {
@@ -61,5 +69,21 @@ public class SplitInfo {
 
     public void setIsAlert(String isAlert) {
         this.isAlert = isAlert == null ? null : isAlert.trim();
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public String getChangeLog() {
+        return changeLog;
+    }
+
+    public void setChangeLog(String changeLog) {
+        this.changeLog = changeLog == null ? null : changeLog.trim();
     }
 }

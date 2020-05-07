@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.util.*
 
 
 @Controller
@@ -36,8 +37,8 @@ class SplitController : BaseController() {
             @RequestParam("file") file: MultipartFile,
             @RequestParam("splitVersion") splitVersion: String,
             @RequestParam("appVersion") appVersion: String,
-            @RequestParam("isAlert") isAlert: String
-
+            @RequestParam("isAlert") isAlert: String?,
+            @RequestParam("changeLog") changeLog: String?
     ): Result {
         if (file.isEmpty) {
             throw BaseException(-1, "文件内容为空，请先选择一个文件！")
@@ -59,29 +60,27 @@ class SplitController : BaseController() {
         val criteria = example.createCriteria()
         criteria.andAppVersionEqualTo(appVersion)
         val list = splitInfoMapper?.selectByExample(example)
-        if (list?.isNotEmpty() == true) {
-            val info = list[0]
-            info.splitVersion = splitVersion
-            info.splitConfigUrl = cacheName
-            info.isAlert = isAlert
-            val count = splitInfoMapper?.updateByPrimaryKey(info)
-            return if (count == 1) {
-                Results.success(info)
-            } else {
-                Results.error(-1, "上传失败")
-            }
+        var isExists = false
+        val info = if (list?.isNotEmpty() == true) {
+            isExists = true
+            list[0]
         } else {
-            val info = SplitInfo()
-            info.splitConfigUrl = cacheName
-            info.appVersion = appVersion
-            info.splitVersion = splitVersion
-            info.isAlert = isAlert
-            val count = splitInfoMapper?.insert(info)
-            return if (count == 1) {
-                Results.success(info)
-            } else {
-                Results.error(-1, "上传失败")
-            }
+            SplitInfo()
+        }
+        info.splitVersion = splitVersion
+        info.splitConfigUrl = cacheName
+        info.isAlert = isAlert ?: "0"
+        info.changeLog = changeLog ?: ""
+        info.updateTime = Date(System.currentTimeMillis())
+        val count = if (isExists) {
+            splitInfoMapper?.updateByPrimaryKey(info)
+        } else {
+            splitInfoMapper?.insert(info)
+        }
+        return if (count == 1) {
+            Results.success(info)
+        } else {
+            Results.error(-1, "上传失败")
         }
     }
 

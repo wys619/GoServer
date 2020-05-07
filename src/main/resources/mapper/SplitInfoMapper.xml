@@ -8,6 +8,8 @@
       <arg column="split_version" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="split_config_url" javaType="java.lang.String" jdbcType="VARCHAR" />
       <arg column="is_alert" javaType="java.lang.String" jdbcType="CHAR" />
+      <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
+      <arg column="change_log" javaType="java.lang.String" jdbcType="VARCHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -69,7 +71,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    split_id, app_version, split_version, split_config_url, is_alert
+    split_id, app_version, split_version, split_config_url, is_alert, update_time, change_log
   </sql>
   <select id="selectByExample" parameterType="cn.woyeshi.server.domain.SplitInfoExample" resultMap="BaseResultMap">
     select
@@ -103,9 +105,11 @@
   </delete>
   <insert id="insert" parameterType="cn.woyeshi.server.domain.SplitInfo">
     insert into t_split_info (split_id, app_version, split_version, 
-      split_config_url, is_alert)
+      split_config_url, is_alert, update_time, 
+      change_log)
     values (#{splitId,jdbcType=INTEGER}, #{appVersion,jdbcType=VARCHAR}, #{splitVersion,jdbcType=VARCHAR}, 
-      #{splitConfigUrl,jdbcType=VARCHAR}, #{isAlert,jdbcType=CHAR})
+      #{splitConfigUrl,jdbcType=VARCHAR}, #{isAlert,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{changeLog,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.woyeshi.server.domain.SplitInfo">
     insert into t_split_info
@@ -125,6 +129,12 @@
       <if test="isAlert != null">
         is_alert,
       </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="changeLog != null">
+        change_log,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="splitId != null">
@@ -141,6 +151,12 @@
       </if>
       <if test="isAlert != null">
         #{isAlert,jdbcType=CHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeLog != null">
+        #{changeLog,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -168,6 +184,12 @@
       <if test="record.isAlert != null">
         is_alert = #{record.isAlert,jdbcType=CHAR},
       </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.changeLog != null">
+        change_log = #{record.changeLog,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -179,7 +201,9 @@
       app_version = #{record.appVersion,jdbcType=VARCHAR},
       split_version = #{record.splitVersion,jdbcType=VARCHAR},
       split_config_url = #{record.splitConfigUrl,jdbcType=VARCHAR},
-      is_alert = #{record.isAlert,jdbcType=CHAR}
+      is_alert = #{record.isAlert,jdbcType=CHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      change_log = #{record.changeLog,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -199,6 +223,12 @@
       <if test="isAlert != null">
         is_alert = #{isAlert,jdbcType=CHAR},
       </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changeLog != null">
+        change_log = #{changeLog,jdbcType=VARCHAR},
+      </if>
     </set>
     where split_id = #{splitId,jdbcType=INTEGER}
   </update>
@@ -207,7 +237,9 @@
     set app_version = #{appVersion,jdbcType=VARCHAR},
       split_version = #{splitVersion,jdbcType=VARCHAR},
       split_config_url = #{splitConfigUrl,jdbcType=VARCHAR},
-      is_alert = #{isAlert,jdbcType=CHAR}
+      is_alert = #{isAlert,jdbcType=CHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      change_log = #{changeLog,jdbcType=VARCHAR}
     where split_id = #{splitId,jdbcType=INTEGER}
   </update>
 </mapper>
