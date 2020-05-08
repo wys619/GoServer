@@ -38,7 +38,8 @@ class SplitController : BaseController() {
             @RequestParam("splitVersion") splitVersion: String,
             @RequestParam("appVersion") appVersion: String,
             @RequestParam("isAlert") isAlert: String?,
-            @RequestParam("changeLog") changeLog: String?
+            @RequestParam("changeLog") changeLog: String?,
+            @RequestParam("isDebug") isDebug: String? = "0"
     ): Result {
         if (file.isEmpty) {
             throw BaseException(-1, "文件内容为空，请先选择一个文件！")
@@ -59,6 +60,7 @@ class SplitController : BaseController() {
         val example = SplitInfoExample()
         val criteria = example.createCriteria()
         criteria.andAppVersionEqualTo(appVersion)
+        criteria.andIsDebugEqualTo(isDebug)
         val list = splitInfoMapper?.selectByExample(example)
         var isExists = false
         val info = if (list?.isNotEmpty() == true) {
@@ -73,6 +75,7 @@ class SplitController : BaseController() {
         info.isAlert = isAlert ?: "0"
         info.changeLog = changeLog ?: ""
         info.updateTime = Date(System.currentTimeMillis())
+        info.isDebug = isDebug
         val count = if (isExists) {
             splitInfoMapper?.updateByPrimaryKey(info)
         } else {
@@ -89,7 +92,8 @@ class SplitController : BaseController() {
     @RequestMapping("/query", method = [RequestMethod.GET])
     @ResponseBody
     fun querySplit(
-            @RequestParam("appVersion") appVersion: String
+            @RequestParam("appVersion") appVersion: String,
+            @RequestParam("isDebug") isDebug: String?
     ): Result {
         if (TextUtils.isEmpty(appVersion)) {
             return Results.error(-1, "appVersion不能为空！")
@@ -97,6 +101,7 @@ class SplitController : BaseController() {
         val example = SplitInfoExample()
         val criteria = example.createCriteria()
         criteria.andAppVersionEqualTo(appVersion)
+        criteria.andIsDebugEqualTo(isDebug)
         val list = splitInfoMapper?.selectByExample(example)
         return if (list?.isNotEmpty() == true) {
             val info = list[0]

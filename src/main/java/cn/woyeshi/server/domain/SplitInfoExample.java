@@ -574,6 +574,76 @@ public class SplitInfoExample {
             addCriterion("change_log not between", value1, value2, "changeLog");
             return (Criteria) this;
         }
+
+        public Criteria andIsDebugIsNull() {
+            addCriterion("is_debug is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugIsNotNull() {
+            addCriterion("is_debug is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugEqualTo(String value) {
+            addCriterion("is_debug =", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugNotEqualTo(String value) {
+            addCriterion("is_debug <>", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugGreaterThan(String value) {
+            addCriterion("is_debug >", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugGreaterThanOrEqualTo(String value) {
+            addCriterion("is_debug >=", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugLessThan(String value) {
+            addCriterion("is_debug <", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugLessThanOrEqualTo(String value) {
+            addCriterion("is_debug <=", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugLike(String value) {
+            addCriterion("is_debug like", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugNotLike(String value) {
+            addCriterion("is_debug not like", value, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugIn(List<String> values) {
+            addCriterion("is_debug in", values, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugNotIn(List<String> values) {
+            addCriterion("is_debug not in", values, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugBetween(String value1, String value2) {
+            addCriterion("is_debug between", value1, value2, "isDebug");
+            return (Criteria) this;
+        }
+
+        public Criteria andIsDebugNotBetween(String value1, String value2) {
+            addCriterion("is_debug not between", value1, value2, "isDebug");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

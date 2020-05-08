@@ -17,7 +17,9 @@ public class SplitInfo {
 
     private String changeLog;
 
-    public SplitInfo(Integer splitId, String appVersion, String splitVersion, String splitConfigUrl, String isAlert, Date updateTime, String changeLog) {
+    private String isDebug;
+
+    public SplitInfo(Integer splitId, String appVersion, String splitVersion, String splitConfigUrl, String isAlert, Date updateTime, String changeLog, String isDebug) {
         this.splitId = splitId;
         this.appVersion = appVersion;
         this.splitVersion = splitVersion;
@@ -25,6 +27,7 @@ public class SplitInfo {
         this.isAlert = isAlert;
         this.updateTime = updateTime;
         this.changeLog = changeLog;
+        this.isDebug = isDebug;
     }
 
     public SplitInfo() {
@@ -85,5 +88,13 @@ public class SplitInfo {
 
     public void setChangeLog(String changeLog) {
         this.changeLog = changeLog == null ? null : changeLog.trim();
+    }
+
+    public String getIsDebug() {
+        return isDebug;
+    }
+
+    public void setIsDebug(String isDebug) {
+        this.isDebug = isDebug == null ? null : isDebug.trim();
     }
 }

@@ -10,6 +10,7 @@
       <arg column="is_alert" javaType="java.lang.String" jdbcType="CHAR" />
       <arg column="update_time" javaType="java.util.Date" jdbcType="TIMESTAMP" />
       <arg column="change_log" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="is_debug" javaType="java.lang.String" jdbcType="CHAR" />
     </constructor>
   </resultMap>
   <sql id="Example_Where_Clause">
@@ -71,7 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    split_id, app_version, split_version, split_config_url, is_alert, update_time, change_log
+    split_id, app_version, split_version, split_config_url, is_alert, update_time, change_log, 
+    is_debug
   </sql>
   <select id="selectByExample" parameterType="cn.woyeshi.server.domain.SplitInfoExample" resultMap="BaseResultMap">
     select
@@ -106,10 +108,10 @@
   <insert id="insert" parameterType="cn.woyeshi.server.domain.SplitInfo">
     insert into t_split_info (split_id, app_version, split_version, 
       split_config_url, is_alert, update_time, 
-      change_log)
+      change_log, is_debug)
     values (#{splitId,jdbcType=INTEGER}, #{appVersion,jdbcType=VARCHAR}, #{splitVersion,jdbcType=VARCHAR}, 
       #{splitConfigUrl,jdbcType=VARCHAR}, #{isAlert,jdbcType=CHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
-      #{changeLog,jdbcType=VARCHAR})
+      #{changeLog,jdbcType=VARCHAR}, #{isDebug,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="cn.woyeshi.server.domain.SplitInfo">
     insert into t_split_info
@@ -135,6 +137,9 @@
       <if test="changeLog != null">
         change_log,
       </if>
+      <if test="isDebug != null">
+        is_debug,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="splitId != null">
@@ -157,6 +162,9 @@
       </if>
       <if test="changeLog != null">
         #{changeLog,jdbcType=VARCHAR},
+      </if>
+      <if test="isDebug != null">
+        #{isDebug,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -190,6 +198,9 @@
       <if test="record.changeLog != null">
         change_log = #{record.changeLog,jdbcType=VARCHAR},
       </if>
+      <if test="record.isDebug != null">
+        is_debug = #{record.isDebug,jdbcType=CHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -203,7 +214,8 @@
       split_config_url = #{record.splitConfigUrl,jdbcType=VARCHAR},
       is_alert = #{record.isAlert,jdbcType=CHAR},
       update_time = #{record.updateTime,jdbcType=TIMESTAMP},
-      change_log = #{record.changeLog,jdbcType=VARCHAR}
+      change_log = #{record.changeLog,jdbcType=VARCHAR},
+      is_debug = #{record.isDebug,jdbcType=CHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -229,6 +241,9 @@
       <if test="changeLog != null">
         change_log = #{changeLog,jdbcType=VARCHAR},
       </if>
+      <if test="isDebug != null">
+        is_debug = #{isDebug,jdbcType=CHAR},
+      </if>
     </set>
     where split_id = #{splitId,jdbcType=INTEGER}
   </update>
@@ -239,7 +254,8 @@
       split_config_url = #{splitConfigUrl,jdbcType=VARCHAR},
       is_alert = #{isAlert,jdbcType=CHAR},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
-      change_log = #{changeLog,jdbcType=VARCHAR}
+      change_log = #{changeLog,jdbcType=VARCHAR},
+      is_debug = #{isDebug,jdbcType=CHAR}
     where split_id = #{splitId,jdbcType=INTEGER}
   </update>
 </mapper>
