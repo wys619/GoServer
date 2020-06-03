@@ -89,7 +89,7 @@ class SplitController : BaseController() {
     }
 
 
-    @RequestMapping("/query", method = [RequestMethod.GET])
+    @RequestMapping("/query", method = [RequestMethod.GET, RequestMethod.POST])
     @ResponseBody
     fun querySplit(
             @RequestParam("appVersion") appVersion: String,
