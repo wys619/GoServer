@@ -24,7 +24,7 @@
         <!--jdbc的数据库连接 -->
         <jdbcConnection
                 driverClass="com.mysql.jdbc.Driver"
-                connectionURL="jdbc:mysql://192.168.1.16:3306/dynamic_feature?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useSSL=false"
+                connectionURL="jdbc:mysql://192.168.0.115:3306/dynamic_feature?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;useSSL=false"
                 userId="jenkins"
                 password="jenkins">
         </jdbcConnection>
